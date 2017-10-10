@@ -7216,7 +7216,7 @@
             http://msdn.microsoft.com/en-us/library/windows/desktop/ms693740%28v=vs.85%29.aspx
             </summary>
         </member>
-        <member name="M:NetOffice.Filtering.IMessageFilter.HandleInComingCall(System.UInt32,System.IntPtr,System.UInt32,NetOffice.Filtering.INTERFACEINFO[])">
+        <member name="M:NetOffice.Filtering.IMessageFilter.HandleInComingCall(System.UInt32,System.IntPtr,System.UInt32,NetOffice.Filtering.InterfaceInfo[])">
             <summary>
             Provides a single entry point for incoming calls.
             </summary>
@@ -7259,22 +7259,22 @@
             PENDINGMSG_WAITDEFPROCESS - Keyboard and mouse messages are no longer dispatched. However there are some cases where mouse and keyboard messages could cause the system to deadlock, and in these cases, mouse and keyboard messages are discarded. WM_PAINT messages are dispatched
             </returns>
         </member>
-        <member name="T:NetOffice.Filtering.INTERFACEINFO">
+        <member name="T:NetOffice.Filtering.InterfaceInfo">
             <summary>
             http://msdn.microsoft.com/en-us/library/windows/desktop/ms683793%28v=vs.85%29.aspx
             </summary>
         </member>
-        <member name="F:NetOffice.Filtering.INTERFACEINFO.punk">
+        <member name="F:NetOffice.Filtering.InterfaceInfo.punk">
             <summary>
             A pointer to the IUnknown interface on the object
             </summary>
         </member>
-        <member name="F:NetOffice.Filtering.INTERFACEINFO.iid">
+        <member name="F:NetOffice.Filtering.InterfaceInfo.iid">
             <summary>
             The identifier of the requested interface
             </summary>
         </member>
-        <member name="F:NetOffice.Filtering.INTERFACEINFO.wMethod">
+        <member name="F:NetOffice.Filtering.InterfaceInfo.wMethod">
             <summary>
             The interface method
             </summary>
