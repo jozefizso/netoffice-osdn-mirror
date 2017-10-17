@@ -1095,6 +1095,56 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:NetOffice.OfficeApi.Tools.Dialogs.PropertyGridDialog">
+            <summary>
+            PropertyGrid Dialog
+            </summary>
+        </member>
+        <member name="M:NetOffice.OfficeApi.Tools.Dialogs.PropertyGridDialog.#ctor">
+            <summary>
+            Creates an instance of the class
+            </summary>
+        </member>
+        <member name="M:NetOffice.OfficeApi.Tools.Dialogs.PropertyGridDialog.#ctor(System.Object)">
+            <summary>
+            Creates an instance of the class
+            </summary>
+            <param name="selectedObject">object as any</param>
+        </member>
+        <member name="M:NetOffice.OfficeApi.Tools.Dialogs.PropertyGridDialog.ShowForm(System.Windows.Forms.IWin32Window,System.Object,System.String)">
+            <summary>
+            Show modal dialog
+            </summary>
+            <param name="owner">owner as any</param>
+            <param name="selectedObject">object as any</param>
+            <param name="text">optional dialog caption</param>
+        </member>
+        <member name="M:NetOffice.OfficeApi.Tools.Dialogs.PropertyGridDialog.ShowForm(System.Object,System.Int32,System.Int32,System.String)">
+            <summary>
+            Show modal dialog
+            </summary>
+            <param name="selectedObject">object as any</param>
+            <param name="width">dialog width</param>
+            <param name="height">dialog height</param>
+            <param name="text">optional dialog caption</param>
+        </member>
+        <member name="F:NetOffice.OfficeApi.Tools.Dialogs.PropertyGridDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:NetOffice.OfficeApi.Tools.Dialogs.PropertyGridDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:NetOffice.OfficeApi.Tools.Dialogs.PropertyGridDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
         <member name="T:NetOffice.OfficeApi.Tools.Dialogs.RichTextDialog">
             <summary>
             Show multi-line/rich text to the user
@@ -2075,7 +2125,7 @@
         </member>
         <member name="P:NetOffice.OfficeApi.Tools.Contribution.DialogUtils.CurrentLanguage">
             <summary>
-            Current used language in dialogs. Default is 1033(en-us) If its failed to find a dialog localization set for current language en-us want be used
+            Current used language in dialogs. Default is 1033(en-us) If its failed to find a dialog localization set for current language - en-us want be used
             </summary>
         </member>
         <member name="P:NetOffice.OfficeApi.Tools.Contribution.DialogUtils.SuppressOnAutomation">
