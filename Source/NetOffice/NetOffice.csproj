@@ -186,6 +186,8 @@
     <Compile Include="Tools\IDisposableState.cs" />
     <Compile Include="Tools\LockbackAttribute.cs" />
     <Compile Include="Tools\CodebaseAttribute.cs" />
+    <Compile Include="Tools\Native\Bridge\CdeclHandle.cs" />
+    <Compile Include="Tools\Native\Bridge\Interop.cs" />
     <Compile Include="Tools\OfficeRegisterKeyState.cs" />
     <Compile Include="Tools\OfficeUnRegisterKeyState.cs" />
     <Compile Include="Tools\OnErrorHandler.cs" />

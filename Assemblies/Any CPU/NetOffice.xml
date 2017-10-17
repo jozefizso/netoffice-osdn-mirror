@@ -7754,6 +7754,145 @@
             <param name="assemblyVersion">assembly version</param>
             <returns>key</returns>
         </member>
+        <member name="T:NetOffice.Tools.Native.Bridge.CdeclHandle">
+            <summary>
+            Represents a handle to an unmanaged library
+            </summary>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.#ctor(System.IntPtr,System.String)">
+            <summary>
+            Creates an instance of the class
+            </summary>
+            <param name="ptr">underlying handle ptr</param>
+            <param name="name">name of the library</param>
+        </member>
+        <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.HandleIsZero">
+            <summary>
+            Underyling Handle Ptr is empty
+            </summary>
+        </member>
+        <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Name">
+            <summary>
+            Name of the Library
+            </summary>
+        </member>
+        <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Underlying">
+            <summary>
+            Underlying Library Handle
+            </summary>
+        </member>
+        <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Functions">
+            <summary>
+            Delegate Cache
+            </summary>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.GetDelegateForFunctionPointer(System.String,System.Type)">
+            <summary>
+            Returns a function pointer by name. The method is caching the operation.
+            </summary>
+            <param name="name">name of the method</param>
+            <param name="type">target delegate type</param>
+            <returns>delegate to unmanaged method</returns>
+            <exception cref="T:System.ComponentModel.Win32Exception">Unable to get proc address or function pointer</exception>
+            <exception cref="T:System.ArgumentNullException">an argument is null or empty</exception>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.LoadLibrary(System.String,System.Diagnostics.FileVersionInfo)">
+            <summary>
+            Loads an unmanaged library from filesystem
+            </summary>
+            <param name="fullFileName">full qualified name of the library file</param>
+            <param name="version">option file version to check</param>
+            <returns>handle to library</returns>
+            <exception cref="T:System.IO.FileNotFoundException">File is missing</exception>
+            <exception cref="T:System.ComponentModel.Win32Exception">Unable to load library</exception>
+            <exception cref="T:System.IO.FileLoadException">A version mismatch occurs</exception>
+            <exception cref="T:System.ArgumentNullException">fullFileName is null or empty</exception>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.LoadLibrary(System.Type,System.String,System.Diagnostics.FileVersionInfo)">
+            <summary>
+            Loads an unmanaged library from filesystem
+            </summary>
+            <param name="codebaseType">type to analyze directory/codebase from</param>
+            <param name="fileName">name(incl. extension) without path of the library</param>
+            <param name="version">option file version to check</param>
+            <returns>handle to library</returns>
+            <exception cref="T:System.IO.FileNotFoundException">File is missing</exception>
+            <exception cref="T:System.ComponentModel.Win32Exception">Unable to load library</exception>
+            <exception cref="T:System.IO.IOException">A version mismatch occurs</exception>
+            <exception cref="T:System.ArgumentNullException">a non-optional argument is null or empty</exception>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.Dispose">
+            <summary>
+            Free the library/dispose the instance
+            </summary>
+            <exception cref="T:System.ComponentModel.Win32Exception">Unable to free library</exception>
+        </member>
+        <member name="T:NetOffice.Tools.Native.Bridge.Interop">
+            <summary>
+            Interop kernel32 Dll Imports
+            </summary>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.Interop.LoadLibrary(System.String)">
+            <summary>
+            Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.
+            </summary>
+            <param name="lpFileName">The name of the module. This can be either a library module (a .dll file) or an executable module (an .exe file)</param>
+            <returns>If the function succeeds, the return value is a handle to the module. If the function fails, the return value is NULL. To get extended error information, call GetLastError.</returns>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.Interop.GetProcAddress(System.IntPtr,System.String)">
+            <summary>
+            Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
+            </summary>
+            <param name="hModule">A handle to the DLL module that contains the function or variable.</param>
+            <param name="lpProcName">The function or variable name, or the function's ordinal value. If this parameter is an ordinal value, it must be in the low-order word; the high-order word must be zero.</param>
+            <returns>If the function succeeds, the return value is the address of the exported function or variable. If the function fails, the return value is NULL. To get extended error information, call GetLastError.</returns>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.Interop.FreeLibrary(System.IntPtr)">
+            <summary>
+            Frees the loaded dynamic-link library (DLL) module and, if necessary, decrements its reference count. When the reference count reaches zero, the module is unloaded from the address space of the calling process and the handle is no longer valid.
+            </summary>
+            <param name="hModule">A handle to the loaded library module.</param>
+            <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error information, call the GetLastError function.</returns>
+        </member>
+        <member name="T:NetOffice.Tools.Native.IDTExtensibility2">
+            <summary>
+            The well known Extensibility
+            </summary>
+        </member>
+        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnConnection(System.Object,NetOffice.Tools.ext_ConnectMode,System.Object,System.Array@)">
+            <summary>
+            Occurs whenever an add-in is loaded into MS-Office
+            </summary>
+            <param name="Application">A reference to an instance of the office application</param>
+            <param name="ConnectMode">An ext_ConnectMode enumeration value that indicates the way the add-in was loaded into MS-Office</param>
+            <param name="AddInInst">An AddIn reference to the add-in's own instance. This is stored for later use, such as determining the parent collection for the add-in</param>
+            <param name="custom">An empty array that you can use to pass host-specific data for use in the add-in</param>
+        </member>
+        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnDisconnection(NetOffice.Tools.ext_DisconnectMode,System.Array@)">
+            <summary>
+            Occurs whenever an add-in is unloaded from MS Office
+            </summary>
+            <param name="RemoveMode">An ext_DisconnectMode enumeration value that informs an add-in why it was unloaded.</param>
+            <param name="custom">An empty array that you can use to pass host-specific data for use after the add-in unloads</param>
+        </member>
+        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnAddInsUpdate(System.Array@)">
+            <summary>
+            Occurs whenever an add-in is loaded or unloaded from MS Office
+            </summary>
+            <param name="custom">An empty array that you can use to pass host-specific data for use in the add-in</param>
+        </member>
+        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnStartupComplete(System.Array@)">
+            <summary>
+             Occurs whenever an add-in, which is set to load when MS Office starts, loads.
+            </summary>
+            <param name="custom">An empty array that you can use to pass host-specific data for use when the add-in loads</param>
+        </member>
+        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnBeginShutdown(System.Array@)">
+            <summary>
+            Occurs whenever MS Office shuts down while an add-in is running
+            </summary>
+            <param name="custom">An empty array that you can use to pass host-specific data for use in the add-in</param>
+        </member>
         <member name="T:NetOffice.Tools.OfficeRegisterKeyState">
             <summary>
             RegAddin.exe want give the information that the necessary Office registry key(s) was already
@@ -8871,45 +9010,6 @@
             OnBeginShutdown Event Handler
             </summary>
             <param name="custom">custom arguments</param>
-        </member>
-        <member name="T:NetOffice.Tools.Native.IDTExtensibility2">
-            <summary>
-            The well known Extensibility
-            </summary>
-        </member>
-        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnConnection(System.Object,NetOffice.Tools.ext_ConnectMode,System.Object,System.Array@)">
-            <summary>
-            Occurs whenever an add-in is loaded into MS-Office
-            </summary>
-            <param name="Application">A reference to an instance of the office application</param>
-            <param name="ConnectMode">An ext_ConnectMode enumeration value that indicates the way the add-in was loaded into MS-Office</param>
-            <param name="AddInInst">An AddIn reference to the add-in's own instance. This is stored for later use, such as determining the parent collection for the add-in</param>
-            <param name="custom">An empty array that you can use to pass host-specific data for use in the add-in</param>
-        </member>
-        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnDisconnection(NetOffice.Tools.ext_DisconnectMode,System.Array@)">
-            <summary>
-            Occurs whenever an add-in is unloaded from MS Office
-            </summary>
-            <param name="RemoveMode">An ext_DisconnectMode enumeration value that informs an add-in why it was unloaded.</param>
-            <param name="custom">An empty array that you can use to pass host-specific data for use after the add-in unloads</param>
-        </member>
-        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnAddInsUpdate(System.Array@)">
-            <summary>
-            Occurs whenever an add-in is loaded or unloaded from MS Office
-            </summary>
-            <param name="custom">An empty array that you can use to pass host-specific data for use in the add-in</param>
-        </member>
-        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnStartupComplete(System.Array@)">
-            <summary>
-             Occurs whenever an add-in, which is set to load when MS Office starts, loads.
-            </summary>
-            <param name="custom">An empty array that you can use to pass host-specific data for use when the add-in loads</param>
-        </member>
-        <member name="M:NetOffice.Tools.Native.IDTExtensibility2.OnBeginShutdown(System.Array@)">
-            <summary>
-            Occurs whenever MS Office shuts down while an add-in is running
-            </summary>
-            <param name="custom">An empty array that you can use to pass host-specific data for use in the add-in</param>
         </member>
         <member name="T:NetOffice.Tools.ext_ConnectMode">
             <summary>
