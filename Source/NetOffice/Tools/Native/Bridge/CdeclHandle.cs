@@ -17,7 +17,7 @@ namespace NetOffice.Tools.Native.Bridge
         /// <summary>
         /// Creates an instance of the class
         /// </summary>
-        /// <param name="ptr">underlying handle ptr</param>
+        /// <param name="ptr">underlying module handle</param>
         /// <param name="folder">folder that contains the library</param>
         /// <param name="name">name of the library</param>
         public CdeclHandle(IntPtr ptr, string folder, string name)
@@ -29,13 +29,13 @@ namespace NetOffice.Tools.Native.Bridge
         }
 
         /// <summary>
-        /// Underyling Handle Ptr is empty
+        /// Underyling Module Handle is empty
         /// </summary>
         public bool HandleIsZero
         {
             get
             {
-                return Underlying != IntPtr.Zero;
+                return Underlying == IntPtr.Zero;
             }
         }
 
@@ -50,7 +50,7 @@ namespace NetOffice.Tools.Native.Bridge
         public string Folder { get; set; }
 
         /// <summary>
-        /// Underlying Library Handle
+        /// Underlying Module Handle
         /// </summary>
         private IntPtr Underlying { get; set; }
 
@@ -184,7 +184,7 @@ namespace NetOffice.Tools.Native.Bridge
         }
 
         /// <summary>
-        /// Returns the underlying native handle
+        /// Returns the underlying module handle
         /// </summary>
         /// <returns>native win32 module handle</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -7764,13 +7764,13 @@
             <summary>
             Creates an instance of the class
             </summary>
-            <param name="ptr">underlying handle ptr</param>
+            <param name="ptr">underlying module handle</param>
             <param name="folder">folder that contains the library</param>
             <param name="name">name of the library</param>
         </member>
         <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.HandleIsZero">
             <summary>
-            Underyling Handle Ptr is empty
+            Underyling Module Handle is empty
             </summary>
         </member>
         <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Name">
@@ -7785,7 +7785,7 @@
         </member>
         <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Underlying">
             <summary>
-            Underlying Library Handle
+            Underlying Module Handle
             </summary>
         </member>
         <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Functions">
@@ -7844,7 +7844,7 @@
         </member>
         <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.GetUnderlyingHandle">
             <summary>
-            Returns the underlying native handle
+            Returns the underlying module handle
             </summary>
             <returns>native win32 module handle</returns>
         </member>
