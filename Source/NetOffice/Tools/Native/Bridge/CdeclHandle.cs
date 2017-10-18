@@ -42,12 +42,12 @@ namespace NetOffice.Tools.Native.Bridge
         /// <summary>
         /// Name of the Library
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Folder that contains the library
         /// </summary>
-        public string Folder { get; set; }
+        public string Folder { get; private set; }
 
         /// <summary>
         /// Underlying Module Handle
@@ -121,7 +121,7 @@ namespace NetOffice.Tools.Native.Bridge
                 if (version != fileVersion)
                 {                
                     throw new FileLoadException(
-                        String.Format("Unable to load library <{0}> because a version mismatch occurs." + fileName));
+                        String.Format("Unable to load library <{0}> because a version mismatch occurs.", fileName));
                 }
             }
 
