@@ -88,7 +88,7 @@ namespace NetOffice.Tools.Native.Bridge
         /// Loads an unmanaged library from filesystem
         /// </summary>
         /// <param name="fullFileName">full qualified name of the library file</param>
-        /// <param name="version">option file version to check</param>
+        /// <param name="version">optional file version to check</param>
         /// <returns>handle to library</returns>
         /// <exception cref="FileNotFoundException">File is missing</exception>
         /// <exception cref="Win32Exception">Unable to load library</exception>
@@ -103,17 +103,20 @@ namespace NetOffice.Tools.Native.Bridge
 
             string fileName = Path.GetFileName(fullFileName);
 
-            IntPtr ptr = Interop.LoadLibrary(fullFileName);
-            if (ptr == IntPtr.Zero)
-                throw new Win32Exception(String.Format("Unable to load library <{0}>.", fileName));
-
             if (null != version)
             {
                 FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(fullFileName);
                 if (version != fileVersion)
-                    throw new FileLoadException(String.Format("Unable to load library <{0}> because a version mismatch occurs.", fileName));
+                {                
+                    throw new FileLoadException(
+                        String.Format("Unable to load library <{0}> because a version mismatch occurs." + fileName));
+                }
             }
 
+            IntPtr ptr = Interop.LoadLibrary(fullFileName);
+            if (ptr == IntPtr.Zero)
+                throw new Win32Exception(String.Format("Unable to load library <{0}>.", fileName));
+            
             return new CdeclHandle(ptr, fileName);
         }
 
@@ -122,7 +125,7 @@ namespace NetOffice.Tools.Native.Bridge
         /// </summary>
         /// <param name="codebaseType">type to analyze directory/codebase from</param>
         /// <param name="fileName">name(incl. extension) without path of the library</param>
-        /// <param name="version">option file version to check</param>
+        /// <param name="version">optional file version to check</param>
         /// <returns>handle to library</returns>
         /// <exception cref="FileNotFoundException">File is missing</exception>
         /// <exception cref="Win32Exception">Unable to load library</exception>
@@ -150,7 +153,7 @@ namespace NetOffice.Tools.Native.Bridge
             if (Underlying != IntPtr.Zero)
             {
                 if (!Interop.FreeLibrary(Underlying))
-                    throw new Win32Exception(String.Format("Unable to free library", Name));
+                    throw new Win32Exception(String.Format("Unable to free library <{0}>.", Name));
                 Underlying = IntPtr.Zero;
             }
         }

@@ -7801,7 +7801,7 @@
             Loads an unmanaged library from filesystem
             </summary>
             <param name="fullFileName">full qualified name of the library file</param>
-            <param name="version">option file version to check</param>
+            <param name="version">optional file version to check</param>
             <returns>handle to library</returns>
             <exception cref="T:System.IO.FileNotFoundException">File is missing</exception>
             <exception cref="T:System.ComponentModel.Win32Exception">Unable to load library</exception>
@@ -7814,7 +7814,7 @@
             </summary>
             <param name="codebaseType">type to analyze directory/codebase from</param>
             <param name="fileName">name(incl. extension) without path of the library</param>
-            <param name="version">option file version to check</param>
+            <param name="version">optional file version to check</param>
             <returns>handle to library</returns>
             <exception cref="T:System.IO.FileNotFoundException">File is missing</exception>
             <exception cref="T:System.ComponentModel.Win32Exception">Unable to load library</exception>
