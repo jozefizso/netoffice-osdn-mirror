@@ -8,7 +8,8 @@ using System.ComponentModel;
 namespace NetOffice.Tools.Native.Bridge
 {
     /// <summary>
-    /// Represents a handle to an unmanaged library
+    /// Represents a handle to an unmanaged library.
+    /// CdeclHandle does not implement any thread-safe operations.
     /// </summary>
     [DebuggerDisplay("{Name}")]
     public class CdeclHandle : IDisposable
@@ -17,10 +18,12 @@ namespace NetOffice.Tools.Native.Bridge
         /// Creates an instance of the class
         /// </summary>
         /// <param name="ptr">underlying handle ptr</param>
+        /// <param name="folder">folder that contains the library</param>
         /// <param name="name">name of the library</param>
-        public CdeclHandle(IntPtr ptr, string name)
+        public CdeclHandle(IntPtr ptr, string folder, string name)
         {
             Underlying = ptr;
+            Folder = folder;
             Name = name;
             Functions = new Dictionary<string, Delegate>();
         }
@@ -42,6 +45,11 @@ namespace NetOffice.Tools.Native.Bridge
         public string Name { get; set; }
 
         /// <summary>
+        /// Folder that contains the library
+        /// </summary>
+        public string Folder { get; set; }
+
+        /// <summary>
         /// Underlying Library Handle
         /// </summary>
         private IntPtr Underlying { get; set; }
@@ -59,12 +67,15 @@ namespace NetOffice.Tools.Native.Bridge
         /// <returns>delegate to unmanaged method</returns>
         /// <exception cref="Win32Exception">Unable to get proc address or function pointer</exception>
         /// <exception cref="ArgumentNullException">an argument is null or empty</exception>
+        /// <exception cref="ObjectDisposedException">instance is already disposed</exception>
         public Delegate GetDelegateForFunctionPointer(string name, Type type)
         {
             if (String.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException("name");
             if (null == type)
                 throw new ArgumentNullException("type");
+            if (HandleIsZero)
+                throw new ObjectDisposedException(String.Format("CdeclHandle <{0}>", Name));
 
             Delegate result = null;
             if (!Functions.ContainsKey(name))
@@ -101,6 +112,7 @@ namespace NetOffice.Tools.Native.Bridge
             if (!File.Exists(fullFileName))
                 throw new FileNotFoundException("File is missing.", fullFileName);
 
+            string folder = Path.GetDirectoryName(fullFileName);
             string fileName = Path.GetFileName(fullFileName);
 
             if (null != version)
@@ -117,7 +129,7 @@ namespace NetOffice.Tools.Native.Bridge
             if (ptr == IntPtr.Zero)
                 throw new Win32Exception(String.Format("Unable to load library <{0}>.", fileName));
             
-            return new CdeclHandle(ptr, fileName);
+            return new CdeclHandle(ptr, folder, fileName);
         }
 
         /// <summary>
@@ -145,7 +157,44 @@ namespace NetOffice.Tools.Native.Bridge
         }
 
         /// <summary>
-        /// Free the library/dispose the instance
+        /// Clear Function Pointer Delegate Cache
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public void ClearCache()
+        {
+            Functions.Clear();
+        }
+
+        /// <summary>
+        /// Lookup inside delegate cache to determine the given function is cached by the instance
+        /// </summary>
+        /// <param name="function">given function as any</param>
+        /// <returns>true if function is cached and instance is not disposed, otherwise false</returns>
+        /// <exception cref="ArgumentNullException">function is null</exception>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public bool IsCachedFunction(Delegate function)
+        {
+            if (null == function)
+                throw new ArgumentNullException("function");
+
+            if (HandleIsZero)
+                return false;
+
+            return Functions.ContainsValue(function);
+        }
+
+        /// <summary>
+        /// Returns the underlying native handle
+        /// </summary>
+        /// <returns>native win32 module handle</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IntPtr GetUnderlyingHandle()
+        {
+            return Underlying;
+        }
+
+        /// <summary>
+        /// Free the library and clears delegate cache
         /// </summary>
         /// <exception cref="Win32Exception">Unable to free library</exception>
         public void Dispose()
@@ -155,6 +204,7 @@ namespace NetOffice.Tools.Native.Bridge
                 if (!Interop.FreeLibrary(Underlying))
                     throw new Win32Exception(String.Format("Unable to free library <{0}>.", Name));
                 Underlying = IntPtr.Zero;
+                Functions.Clear();
             }
         }
     }

@@ -7756,14 +7756,16 @@
         </member>
         <member name="T:NetOffice.Tools.Native.Bridge.CdeclHandle">
             <summary>
-            Represents a handle to an unmanaged library
+            Represents a handle to an unmanaged library.
+            CdeclHandle does not implement any thread-safe operations.
             </summary>
         </member>
-        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.#ctor(System.IntPtr,System.String)">
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.#ctor(System.IntPtr,System.String,System.String)">
             <summary>
             Creates an instance of the class
             </summary>
             <param name="ptr">underlying handle ptr</param>
+            <param name="folder">folder that contains the library</param>
             <param name="name">name of the library</param>
         </member>
         <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.HandleIsZero">
@@ -7774,6 +7776,11 @@
         <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Name">
             <summary>
             Name of the Library
+            </summary>
+        </member>
+        <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Folder">
+            <summary>
+            Folder that contains the library
             </summary>
         </member>
         <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.Underlying">
@@ -7795,6 +7802,7 @@
             <returns>delegate to unmanaged method</returns>
             <exception cref="T:System.ComponentModel.Win32Exception">Unable to get proc address or function pointer</exception>
             <exception cref="T:System.ArgumentNullException">an argument is null or empty</exception>
+            <exception cref="T:System.ObjectDisposedException">instance is already disposed</exception>
         </member>
         <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.LoadLibrary(System.String,System.Diagnostics.FileVersionInfo)">
             <summary>
@@ -7821,9 +7829,28 @@
             <exception cref="T:System.IO.IOException">A version mismatch occurs</exception>
             <exception cref="T:System.ArgumentNullException">a non-optional argument is null or empty</exception>
         </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.ClearCache">
+            <summary>
+            Clear Function Pointer Delegate Cache
+            </summary>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.IsCachedFunction(System.Delegate)">
+            <summary>
+            Lookup inside delegate cache to determine the given function is cached by the instance
+            </summary>
+            <param name="function">given function as any</param>
+            <returns>true if function is cached and instance is not disposed, otherwise false</returns>
+            <exception cref="T:System.ArgumentNullException">function is null</exception>
+        </member>
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.GetUnderlyingHandle">
+            <summary>
+            Returns the underlying native handle
+            </summary>
+            <returns>native win32 module handle</returns>
+        </member>
         <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.Dispose">
             <summary>
-            Free the library/dispose the instance
+            Free the library and clears delegate cache
             </summary>
             <exception cref="T:System.ComponentModel.Win32Exception">Unable to free library</exception>
         </member>
