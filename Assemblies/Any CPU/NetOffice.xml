@@ -7764,9 +7764,11 @@
             <summary>
             Creates an instance of the class
             </summary>
-            <param name="ptr">underlying module handle</param>
+            <param name="underlying">underlying module handle</param>
             <param name="folder">folder that contains the library</param>
             <param name="name">name of the library</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">underlying is empty</exception>
+            <exception cref="T:System.ArgumentNullException">name is null or empty</exception>
         </member>
         <member name="P:NetOffice.Tools.Native.Bridge.CdeclHandle.HandleIsZero">
             <summary>

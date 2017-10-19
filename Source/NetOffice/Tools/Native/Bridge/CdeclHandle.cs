@@ -17,14 +17,19 @@ namespace NetOffice.Tools.Native.Bridge
         /// <summary>
         /// Creates an instance of the class
         /// </summary>
-        /// <param name="ptr">underlying module handle</param>
+        /// <param name="underlying">underlying module handle</param>
         /// <param name="folder">folder that contains the library</param>
         /// <param name="name">name of the library</param>
-        public CdeclHandle(IntPtr ptr, string folder, string name)
+        /// <exception cref="ArgumentOutOfRangeException">underlying is empty</exception>
+        /// <exception cref="ArgumentNullException">name is null or empty</exception>
+        public CdeclHandle(IntPtr underlying, string folder, string name)
         {
-            if (HandleIsZero)
-                throw new ObjectDisposedException(String.Format("CdeclHandle <{0}>", Name));
-            Underlying = ptr;
+            if (underlying == IntPtr.Zero)
+                throw new ArgumentOutOfRangeException("underlying", "Underlying module handle can not be empty.");
+            if(String.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException("name", "Name can not be null or empty.");
+
+            Underlying = underlying;
             Folder = folder;
             Name = name;
             Functions = new Dictionary<string, Delegate>();
