@@ -7804,25 +7804,25 @@
             <exception cref="T:System.ArgumentNullException">an argument is null or empty</exception>
             <exception cref="T:System.ObjectDisposedException">instance is already disposed</exception>
         </member>
-        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.LoadLibrary(System.String,System.Diagnostics.FileVersionInfo)">
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.LoadLibrary(System.String,System.Version)">
             <summary>
             Loads an unmanaged library from filesystem
             </summary>
             <param name="fullFileName">full qualified name of the library file</param>
-            <param name="version">optional file version to check</param>
+            <param name="fileVersion">optional file version to check major and minor</param>
             <returns>handle to library</returns>
             <exception cref="T:System.IO.FileNotFoundException">File is missing</exception>
             <exception cref="T:System.ComponentModel.Win32Exception">Unable to load library</exception>
             <exception cref="T:System.IO.FileLoadException">A version mismatch occurs</exception>
             <exception cref="T:System.ArgumentNullException">fullFileName is null or empty</exception>
         </member>
-        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.LoadLibrary(System.Type,System.String,System.Diagnostics.FileVersionInfo)">
+        <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.LoadLibrary(System.Type,System.String,System.Version)">
             <summary>
             Loads an unmanaged library from filesystem
             </summary>
             <param name="codebaseType">type to analyze directory/codebase from</param>
             <param name="fileName">name(incl. extension) without path of the library</param>
-            <param name="version">optional file version to check</param>
+            <param name="fileVersion">optional file version to check major and minor</param>
             <returns>handle to library</returns>
             <exception cref="T:System.IO.FileNotFoundException">File is missing</exception>
             <exception cref="T:System.ComponentModel.Win32Exception">Unable to load library</exception>

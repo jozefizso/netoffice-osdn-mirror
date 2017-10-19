@@ -22,6 +22,8 @@ namespace NetOffice.Tools.Native.Bridge
         /// <param name="name">name of the library</param>
         public CdeclHandle(IntPtr ptr, string folder, string name)
         {
+            if (HandleIsZero)
+                throw new ObjectDisposedException(String.Format("CdeclHandle <{0}>", Name));
             Underlying = ptr;
             Folder = folder;
             Name = name;
@@ -99,13 +101,13 @@ namespace NetOffice.Tools.Native.Bridge
         /// Loads an unmanaged library from filesystem
         /// </summary>
         /// <param name="fullFileName">full qualified name of the library file</param>
-        /// <param name="version">optional file version to check</param>
+        /// <param name="fileVersion">optional file version to check major and minor</param>
         /// <returns>handle to library</returns>
         /// <exception cref="FileNotFoundException">File is missing</exception>
         /// <exception cref="Win32Exception">Unable to load library</exception>
         /// <exception cref="FileLoadException">A version mismatch occurs</exception>
         /// <exception cref="ArgumentNullException">fullFileName is null or empty</exception>
-        public static CdeclHandle LoadLibrary(string fullFileName, FileVersionInfo version = null)
+        public static CdeclHandle LoadLibrary(string fullFileName, Version fileVersion = null)
         {
             if (String.IsNullOrWhiteSpace(fullFileName))
                 throw new ArgumentNullException("fullFileName");
@@ -115,11 +117,12 @@ namespace NetOffice.Tools.Native.Bridge
             string folder = Path.GetDirectoryName(fullFileName);
             string fileName = Path.GetFileName(fullFileName);
 
-            if (null != version)
+            if (null != fileVersion)
             {
-                FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(fullFileName);
-                if (version != fileVersion)
-                {                
+                FileVersionInfo version = FileVersionInfo.GetVersionInfo(fullFileName);
+                if (version.FileMajorPart != fileVersion.Major ||
+                    version.FileMinorPart != fileVersion.Minor)
+                {
                     throw new FileLoadException(
                         String.Format("Unable to load library <{0}> because a version mismatch occurs.", fileName));
                 }
@@ -137,13 +140,13 @@ namespace NetOffice.Tools.Native.Bridge
         /// </summary>
         /// <param name="codebaseType">type to analyze directory/codebase from</param>
         /// <param name="fileName">name(incl. extension) without path of the library</param>
-        /// <param name="version">optional file version to check</param>
+        /// <param name="fileVersion">optional file version to check major and minor</param>
         /// <returns>handle to library</returns>
         /// <exception cref="FileNotFoundException">File is missing</exception>
         /// <exception cref="Win32Exception">Unable to load library</exception>
         /// <exception cref="IOException">A version mismatch occurs</exception>
         /// <exception cref="ArgumentNullException">a non-optional argument is null or empty</exception>
-        public static CdeclHandle LoadLibrary(Type codebaseType, string fileName, FileVersionInfo version = null)
+        public static CdeclHandle LoadLibrary(Type codebaseType, string fileName, Version fileVersion = null)
         {
             if (null == codebaseType)
                 throw new ArgumentNullException("codebaseType");
@@ -153,7 +156,7 @@ namespace NetOffice.Tools.Native.Bridge
             string location = codebaseType.Assembly.Location;
             string folderPath = Path.GetDirectoryName(location);
             string fullFileName = Path.Combine(folderPath, fileName);
-            return LoadLibrary(fullFileName, version);
+            return LoadLibrary(fullFileName, fileVersion);
         }
 
         /// <summary>
