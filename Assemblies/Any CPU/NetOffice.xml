@@ -7828,7 +7828,7 @@
             <returns>handle to library</returns>
             <exception cref="T:System.IO.FileNotFoundException">File is missing</exception>
             <exception cref="T:System.ComponentModel.Win32Exception">Unable to load library</exception>
-            <exception cref="T:System.IO.IOException">A version mismatch occurs</exception>
+            <exception cref="T:System.IO.FileLoadException">A version mismatch occurs</exception>
             <exception cref="T:System.ArgumentNullException">a non-optional argument is null or empty</exception>
         </member>
         <member name="M:NetOffice.Tools.Native.Bridge.CdeclHandle.ClearCache">

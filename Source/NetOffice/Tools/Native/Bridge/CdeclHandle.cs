@@ -149,7 +149,7 @@ namespace NetOffice.Tools.Native.Bridge
         /// <returns>handle to library</returns>
         /// <exception cref="FileNotFoundException">File is missing</exception>
         /// <exception cref="Win32Exception">Unable to load library</exception>
-        /// <exception cref="IOException">A version mismatch occurs</exception>
+        /// <exception cref="FileLoadException">A version mismatch occurs</exception>
         /// <exception cref="ArgumentNullException">a non-optional argument is null or empty</exception>
         public static CdeclHandle LoadLibrary(Type codebaseType, string fileName, Version fileVersion = null)
         {
