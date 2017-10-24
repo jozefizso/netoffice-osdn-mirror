@@ -139,6 +139,7 @@
     <Compile Include="Exceptions\DuckException.cs" />
     <Compile Include="Exceptions\ExceptionMessageBuilder.cs" />
     <Compile Include="Exceptions\FactoryException.cs" />
+    <Compile Include="Exceptions\IDispatchNotImplementedException.cs" />
     <Compile Include="Exceptions\InvokerCOMException.cs" />
     <Compile Include="Exceptions\MethodCOMException.cs" />
     <Compile Include="Exceptions\NetOfficeCOMException.cs" />

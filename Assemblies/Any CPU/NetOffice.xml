@@ -1812,6 +1812,22 @@
             <param name="value">type id</param>
             <returns>true if duplicate, otherwise false</returns>
         </member>
+        <member name="M:NetOffice.CoreFactoryExtensions.GetTypeInfo(NetOffice.IDispatch)">
+            <summary>
+            Performs GetTypeInfo on IDispatch
+            Handle the strange cast behavior - see remarks. 
+            </summary>
+            <remarks>
+            Seems to be cast to IDispatch never failed
+            even the instance behind comProxy doesnt implement the interface.
+            If its failed to cast, an InvalidCastException occurs 
+            while first use the interface.
+            The method catch arround here and throws IDispatchNotImplementedException 
+            to signalize the missing IDispatch suport.    
+            </remarks>
+            <param name="dispatcher">given IDispatch as any </param>
+            <returns>type informations or null if dispatcher argument is null</returns>
+        </member>
         <member name="T:NetOffice.CoreMethodExtensions">
             <summary>
             Provides top-off Core/Invoker method services to shrink caller code in Api assemblies and give more refactoring possibilies
@@ -6671,6 +6687,41 @@
             <param name="innerException">inner exception</param>
         </member>
         <member name="M:NetOffice.Exceptions.FactoryException.#ctor(System.String,System.Exception)">
+            <summary>
+            Creates an instance of the class
+            </summary>
+            <param name="message">given exception info</param>
+            <param name="innerException">inner exception</param>
+        </member>
+        <member name="T:NetOffice.Exceptions.IDispatchNotImplementedException">
+            <summary>
+            Indicates a given com proxy/result doesnt implement the IDispatch COM Import Interface.
+            The IDispatch interface is the key interface for latebinding which NetOffice use strictly.
+            </summary>
+        </member>
+        <member name="F:NetOffice.Exceptions.IDispatchNotImplementedException._defaultMessage">
+            <summary>
+            Default Exception Message
+            </summary>
+        </member>
+        <member name="M:NetOffice.Exceptions.IDispatchNotImplementedException.#ctor">
+            <summary>
+            Creates an instance of the class
+            </summary>
+        </member>
+        <member name="M:NetOffice.Exceptions.IDispatchNotImplementedException.#ctor(System.Exception)">
+            <summary>
+            Creates an instance of the class
+            </summary>
+            <param name="innerException">inner exception</param>
+        </member>
+        <member name="M:NetOffice.Exceptions.IDispatchNotImplementedException.#ctor(System.String)">
+            <summary>
+            Creates an instance of the class
+            </summary>
+            <param name="message">given exception info</param>
+        </member>
+        <member name="M:NetOffice.Exceptions.IDispatchNotImplementedException.#ctor(System.String,System.Exception)">
             <summary>
             Creates an instance of the class
             </summary>
