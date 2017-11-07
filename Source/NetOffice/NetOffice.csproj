@@ -143,6 +143,7 @@
     <Compile Include="Exceptions\InvokerCOMException.cs" />
     <Compile Include="Exceptions\MethodCOMException.cs" />
     <Compile Include="Exceptions\NetOfficeCOMException.cs" />
+    <Compile Include="Exceptions\NetOfficeIOException.cs" />
     <Compile Include="Exceptions\PropertyGetCOMException.cs" />
     <Compile Include="Exceptions\PropertySetCOMException.cs" />
     <Compile Include="Exceptions\RegisterException.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Interfaces\ICOMObjectAvaility.cs" />
     <Compile Include="Interfaces\ICOMProxyShareProvider.cs" />
+    <Compile Include="IO\IOPath.cs" />
     <Compile Include="Loader\FactoryList.cs" />
     <Compile Include="Loader\KnownKeyTokens.cs" />
     <Compile Include="Loader\PathBuilder.cs" />

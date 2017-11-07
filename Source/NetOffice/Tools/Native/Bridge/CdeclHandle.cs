@@ -4,6 +4,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.ComponentModel;
+using NetOffice.IO;
+using NetOffice.Exceptions;
 
 namespace NetOffice.Tools.Native.Bridge
 {
@@ -94,7 +96,6 @@ namespace NetOffice.Tools.Native.Bridge
                 if (null == result)
                     throw new Win32Exception(String.Format("Unable to get function pointer <{0}> in <{1}>.", name, Name));              
                 Functions.Add(name, result);
-                return result;
             }
             else
                 result = Functions[name];
@@ -112,6 +113,7 @@ namespace NetOffice.Tools.Native.Bridge
         /// <exception cref="Win32Exception">Unable to load library</exception>
         /// <exception cref="FileLoadException">A version mismatch occurs</exception>
         /// <exception cref="ArgumentNullException">fullFileName is null or empty</exception>
+        /// <exception cref="NetOfficeIOException">I/O related error</exception>
         public static CdeclHandle LoadLibrary(string fullFileName, Version fileVersion = null)
         {
             if (String.IsNullOrWhiteSpace(fullFileName))
@@ -119,8 +121,8 @@ namespace NetOffice.Tools.Native.Bridge
             if (!File.Exists(fullFileName))
                 throw new FileNotFoundException("File is missing.", fullFileName);
 
-            string folder = Path.GetDirectoryName(fullFileName);
-            string fileName = Path.GetFileName(fullFileName);
+            string folder = IOPath.GetDirectoryName(fullFileName);
+            string fileName = IOPath.GetFileName(fullFileName);
 
             if (null != fileVersion)
             {
@@ -151,6 +153,7 @@ namespace NetOffice.Tools.Native.Bridge
         /// <exception cref="Win32Exception">Unable to load library</exception>
         /// <exception cref="FileLoadException">A version mismatch occurs</exception>
         /// <exception cref="ArgumentNullException">a non-optional argument is null or empty</exception>
+        /// <exception cref="NetOfficeIOException">I/O related error</exception>
         public static CdeclHandle LoadLibrary(Type codebaseType, string fileName, Version fileVersion = null)
         {
             if (null == codebaseType)
@@ -214,6 +217,15 @@ namespace NetOffice.Tools.Native.Bridge
                 Underlying = IntPtr.Zero;
                 Functions.Clear();
             }
+        }
+
+        /// <summary>
+        /// Returns a System.String that represents the instance
+        /// </summary>
+        /// <returns>System.String</returns>
+        public override string ToString()
+        {
+            return String.Format("{0}<{1}>", Name, Underlying);
         }
     }
 }
